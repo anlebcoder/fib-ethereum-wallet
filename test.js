@@ -1,12 +1,12 @@
-var test = require('test');
+const test = require('test');
 test.setup();
 
-var index = require("./index");
-var Wallet = index.Wallet;
-var Tx = index.Tx;
+const index = require("./index");
+const Wallet = index.Wallet;
+const Tx = index.Tx;
 
 describe('fib-ethereum-wallet', function() {
-	var account,
+	let account,
 		address,
 		privateKey,
 		publicKey,
@@ -17,18 +17,18 @@ describe('fib-ethereum-wallet', function() {
 		/* 
 			详细看看gasPrice以及gasLimit以及value的作用，方能成功
 		 */
-		var txParams = {
-			nonce: 0, //每个地址单独的，防重放：'0x0'
-			gasPrice: 0.000000028, //单位是eth,需要传成16进制的wei
-			gasLimit: 90000, //需要转成16进制的工
+		let txParams = {
+			nonce: '0x' + (0).toString(16), //每个地址单独的，防重放：'0x0'
+			gasPrice: '0x' + (0.000000028).toString(16), //单位是eth,需要传成16进制的wei
+			gasLimit: '0x' + (90000).toString(16), //需要转成16进制的工
 			from: "0xd169860229b152750981fd1bd8a30cea3a201fa0",
 			to: "0xc4bc0d6776f9b6ab553f2d33c18615ecbe4db1e3",
-			value: 0.001, //单位是eth,需要转成16进制的wei
+			value: '0x' + (0.001).toString(16), //单位是eth,需要转成16进制的wei
 			chainId: 3 //mainNet 1 testNet 3（网络）
 		}
 
-		var pkey = '0x5ec4df327becc55e27f2efa74afe94dd12c12d7dd9b370c29c7b544108d02e24';
-		var signData = Tx(pkey, txParams);
+		let pkey = '0x5ec4df327becc55e27f2efa74afe94dd12c12d7dd9b370c29c7b544108d02e24';
+		let signData = Tx(pkey, txParams);
 		console.warn(signData);
 	});
 
@@ -53,12 +53,12 @@ describe('fib-ethereum-wallet', function() {
 
 	it("获取保存文件", function() {
 		//UTC--2018-03-15T05-38-58.865Z--75987289b92bbea10a5b09d53a3089bf72911585
-		var f1 = account.getV3Filename();
+		let f1 = account.getV3Filename();
 		assert.ok(f1.indexOf(address.substr(2)) !== -1);
 
 		//多次获取名字效果,随着时间变化
 
-		var f2 = account.getV3Filename();
+		let f2 = account.getV3Filename();
 		assert.ok(f2.indexOf(address.substr(2)) !== -1);
 		assert.notEqual(f1, f2);
 	});
@@ -72,7 +72,7 @@ describe('fib-ethereum-wallet', function() {
 	});
 
 	it("加载keystore", function() {
-		var key1 = {
+		let key1 = {
 			"version": 3,
 			"id": "459f9698-e23f-4338-88db-c4a37e393331",
 			"address": "16f08992b5f3f01242c9839219814ea4d8de24c4",
@@ -94,7 +94,7 @@ describe('fib-ethereum-wallet', function() {
 			}
 		};
 
-		var key2 = {
+		let key2 = {
 			"version": 3,
 			"id": "7ab7fcd7-5540-4e03-8ca3-68cad4be943c",
 			"address": "16f08992b5f3f01242c9839219814ea4d8de24c4",
@@ -116,7 +116,7 @@ describe('fib-ethereum-wallet', function() {
 			}
 		};
 
-		var pkey = '0x242f47e8ae00fe42b2ee4cc5d15a1e9f4fc4e2a72605debe7a09be37520bb5ea';
+		let pkey = '0x242f47e8ae00fe42b2ee4cc5d15a1e9f4fc4e2a72605debe7a09be37520bb5ea';
 
 		/*错误的密码
 			throw new Error('Key derivation failed - possibly wrong passphrase')
@@ -126,11 +126,11 @@ describe('fib-ethereum-wallet', function() {
 		});
 
 		//2次不同时间的keystore 加载出的私钥一致
-		var acount2 = new Wallet(JSON.stringify(key1), "123456");
+		let acount2 = new Wallet(JSON.stringify(key1), "123456");
 		console.warn("privateKey:", pkey);
 		assert.equal(acount2.getPrivateKeyString(), pkey);
 
-		var acount3 = new Wallet(JSON.stringify(key2), "123456");
+		let acount3 = new Wallet(JSON.stringify(key2), "123456");
 		assert.equal(acount3.getPrivateKeyString(), pkey);
 	});
 });
