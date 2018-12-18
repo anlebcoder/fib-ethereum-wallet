@@ -1,0 +1,14 @@
+{
+	"name": "fib-ethereum-wallet",
+	"main": "index.js",
+	"version": "1.1.0",
+	"description": "a safe ethereum wallet by fibjs",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/anlebcoder/fib-ethereum-wallet"
+	},
+	"keywords": "",
+	"author": "anlebcoder",
+	"license": "ISC",
+	"dependencies": {}
+}
